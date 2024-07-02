@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootstrap-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!-- Vue -->
+  <script src='https://unpkg.com/vue@3'></script>
+  <!-- Axios-->
+  <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-top: 20px;
+    } 
+
+    .loading-circle {
+      width: 20px;
+      height: 20px;
+      background-color: #3498db;
+      border-radius: 50%;
+      animation: loading 1s infinite;
+      margin: 0 5px;
+    }
+
+    .loading-circle:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-circle:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes loading {
+      0%, 80%, 100% {
+          transform: scale(0);
+      }
+      40% {
+          transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <title>{{ title }}</title>
+    <h1>{{ title }}</h1>
+    <div>
+      <div class="row">
+        <div class="col">
+          <input class="form-control" @keyup.enter="getApi" type="text" v-model.trim="author">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" @click="getApi">Cerca</button>
+        </div>
+      </div>
+    </div>
+    <table class="table my-5" v-if="isLoading">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titolo</th>
+        <th scope="col">Autore</th>
+        <th scope="col">Lingua</th>
+        <th scope="col">Pubblicazione</th>
+        <th scope="col">ISBN</th>
+      </tr>
+      <tr v-for="(book, index) in books" :key="index">
+        <th>{{ index + 1 }}</th>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author_name ? book.author_name[0] : '-' }}</td>
+        <td v-if="book.language">{{ book.language[0] }}</td>
+        <td v-else>-</td>
+        <td>{{ book.first_publish_year }}</td>
+        <td>{{ book.isbn ? book.isbn.join(', ') : '-' }}</td>
+      </tr>
+    </table>
+    <div v-else>
+      <div class="loading-container">
+        <div class="loading-circle"></div>
+        <div class="loading-circle"></div>
+        <div class="loading-circle"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
