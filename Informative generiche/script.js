@@ -45,3 +45,12 @@
   ]
 }
 
+//Query String: una stringa che contiene un numero di valori separati da &, questo è un modo per passare dei valori all'interno di una url es:
+
+'http://localhost:8080/utenti?nome=Mario&cognome=Bros&indirizzo=Via+Roma'
+
+//? indica l'inizio di una query string
+//= indica la separazione di un parametro e il valore(key=value)
+//& indica la fine della query string(key=value&)
+
+//utilizziamo thunderclient per testare le query string
